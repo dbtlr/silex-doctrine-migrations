@@ -1,0 +1,26 @@
+{
+    "name": "dbtlr/sliex-doctrine-migrations",
+    "type": "library",
+    "description": "Doctrine migration service provider for Silex",
+    "keywords": [ "doctrine2", "silex", "migration" ],
+    "homepage": "http://github.com/dbtlr/sliex-doctrine-migrations",
+    "license": "MIT",
+    "authors": [
+        {
+            "name":     "Drew Butler",
+            "homepage": "http://dbtlr.com"
+        }
+    ],
+    "require": {
+        "php":                              ">=5.3.2",
+        "doctrine/dbal":                    "~2.1",
+        "silex/silex":                      "*",
+        "symfony/finder":                   "2.1.*",
+        "knplabs/console-service-provider": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Dbtlr\\MigrationProvider\\": "src/"
+        }
+    }
+}
