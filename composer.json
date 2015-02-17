@@ -1,9 +1,9 @@
 {
-    "name": "dbtlr/sliex-doctrine-migrations",
+    "name": "dbtlr/silex-doctrine-migrations",
     "type": "library",
     "description": "Doctrine migration service provider for Silex",
     "keywords": [ "doctrine2", "silex", "migration" ],
-    "homepage": "http://github.com/dbtlr/sliex-doctrine-migrations",
+    "homepage": "http://github.com/dbtlr/silex-doctrine-migrations",
     "license": "MIT",
     "authors": [
         {
