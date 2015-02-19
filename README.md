@@ -2,6 +2,9 @@
 
 This is a wrapper for the [Doctrine Migrations project](http://docs.doctrine-project.org/projects/doctrine-migrations/en/latest/reference/introduction.html).
 
+For more information on how to use the schema manager, please see [Doctrine's Schema Manager documentation](http://readthedocs.org/docs/doctrine-dbal/en/latest/reference/schema-manager.html). 
+
+
 ## Install via Composer
 
 ```
@@ -33,8 +36,6 @@ $app->register(new \Dbtlr\MigrationProvider\MigrationServiceProvider(), array(
 - migrations:version    Manually add and delete migration versions from the version table.
 
 
-```
 
-For more information on how to use the schema manager, please see [Doctrine's Schema Manager documentation](http://readthedocs.org/docs/doctrine-dbal/en/latest/reference/schema-manager.html). 
 
-```
+
