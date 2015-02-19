@@ -1,6 +1,6 @@
 # Silex Migration Provider
 
-Quick Doctrine migration service provider, somewhat based on the KnpLabs version, though I've largely rewritten it to be more feature full.
+This is a wrapper for the [Doctrine Migrations project](http://docs.doctrine-project.org/projects/doctrine-migrations/en/latest/reference/introduction.html).
 
 ## Install via Composer
 
@@ -12,68 +12,29 @@ composer.phar require dbtlr/silex-doctrine-migrations
 
 ```php
 $app->register(new \Dbtlr\MigrationProvider\MigrationServiceProvider(), array(
-    'migrations.path' => __DIR__ . '/../app/migrations'
+    'db.migrations.path' => __DIR__ . '/../app/migrations',
 ));
 ```
 
 ### Config options
 
-- `migrations.path` (required): The full path where you want to store your migration classes.
-- `migrations.table_name` (optional): The name of the table that we store meta information about the state of migrations. Defaults to: migration_versions.
+- `db.migrations.path` (required): The full path where you want to store your migration classes.
+- `db.migrations.table_name` (optional): The name of the table that we store meta information about the state of migrations. Defaults to: migration_versions.
+- `db.migrations.namespace` (optional): The namespace for the migration classes (defaults to: DoctrineMigration).
+- `db.migrations.name` (optional): TThe name of the migrations to use.
 
 
 ## Available commands
 
-- migrations:reset - Be careful with this one, it will blow up the versions table and start over. You probably don't want to do this.
-- migrations:create - Create a new migration class in your migration path.
-- migrations:migrate - Run migrations and come to current.
+- migrations:execute    Execute a single migration version up or down manually.
+- migrations:generate   Generate a blank migration class.
+- migrations:migrate    Execute a migration to a specified version or the latest available version.
+- migrations:status     View the status of a set of migrations.
+- migrations:version    Manually add and delete migration versions from the version table.
 
-## Example migration class
-
-```php
-<?php
-
-namespace Migration;
-
-use Dbtlr\MigrationProvider\Migration\AbstractMigration;
-use Doctrine\DBAL\Schema\Schema;
-
-class Version0123456789Migration extends AbstractMigration
-{
-    /**
-     * @param Schema $schema
-     */
-    public function up(Schema $schema)
-    {
-        // Your schema up migration
-    }
-
-    /**
-     * @param Schema $schema
-     */
-    public function down(Schema $schema)
-    {
-        // Your schema down migration.
-    }
-
-    /**
-     * @return string
-     */
-    public function getMigrationInfo()
-    {
-        return 'Some plain text telling you what this does.';
-    }
-}
 
 ```
 
 For more information on how to use the schema manager, please see [Doctrine's Schema Manager documentation](http://readthedocs.org/docs/doctrine-dbal/en/latest/reference/schema-manager.html). 
 
 ```
-
-## Todo
-
-There are still some missing pieces.
-
-- The `up`/`down` commands for migrations need to be added.
-- The ability to target a version to migrate to.

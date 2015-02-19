@@ -2,12 +2,8 @@
 
 namespace Dbtlr\MigrationProvider\Provider;
 
-use Dbtlr\MigrationProvider\Command\CreateCommand;
-use Dbtlr\MigrationProvider\Command\ResetCommand;
-use Dbtlr\MigrationProvider\Manager\TableManager;
-use Dbtlr\MigrationProvider\Manager\VersionManager;
-use Dbtlr\MigrationProvider\Command\MigrateCommand;
-use Symfony\Component\Finder\Finder;
+use Doctrine\DBAL\Migrations\Configuration\Configuration;
+use Doctrine\DBAL\Migrations\Tools\Console\Command;
 use Silex\ServiceProviderInterface;
 use Silex\Application;
 use Knp\Console\ConsoleEvents;
@@ -20,23 +16,44 @@ class MigrationServiceProvider implements ServiceProviderInterface
      */
     public function register(Application $app)
     {
-        $app['migrations.manager.version'] = $app->share(function () use ($app) {
-            if (!$app->offsetExists('migrations.path')) {
-                throw new \RuntimeException('The migrations.path must be provided in order to manage versions.');
+        $app['db.migrations.namespace'] = 'DoctrineMigrations';
+        $app['db.migrations.path'] = null;
+        $app['db.migrations.table_name'] = null;
+        $app['db.migrations.name'] = null;
+
+        $app['dispatcher']->addListener(ConsoleEvents::INIT, function (ConsoleEvent $event) use ($app) {
+            $application = $event->getApplication();
+
+            $config = new Configuration($app['db']);
+            $config->setMigrationsNamespace($app['db.migrations.namespace']);
+
+            if ($app['db.migrations.path']) {
+                $config->setMigrationsDirectory($app['db.migrations.path']);
+                $config->registerMigrationsFromDirectory($app['db.migrations.path']);
             }
 
-            return new VersionManager($app['db'], $app, Finder::create()->in($app['migrations.path']));
-        });
+            if ($app['db.migrations.name']) {
+                $config->setName($app['db.migrations.name']);
+            }
 
-        $app['migrations.manager.table'] = $app->share(function () use ($app) {
-            return new TableManager($app['db'], $app);
-        });
+            if ($app['db.migrations.table_name']) {
+                $config->setMigrationsTableName($app['db.migrations.table_name']);
+            }
 
-        $app['dispatcher']->addListener(ConsoleEvents::INIT, function (ConsoleEvent $event) {
-            $application = $event->getApplication();
-            $application->add(new MigrateCommand());
-            $application->add(new CreateCommand());
-            $application->add(new ResetCommand());
+            $commands = array(
+                new Command\DiffCommand(),
+                new Command\ExecuteCommand(),
+                new Command\GenerateCommand(),
+                new Command\MigrateCommand(),
+                new Command\StatusCommand(),
+                new Command\VersionCommand(),
+            );
+
+            foreach ($commands as $command) {
+                /** @var \Doctrine\DBAL\Migrations\Tools\Console\Command\AbstractCommand $command */
+                $command->setMigrationConfiguration($config);
+                $application->add($command);
+            }
         });
     }
 
