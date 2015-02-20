@@ -18,6 +18,9 @@
         "doctrine/migrations": "1.0.*@dev",
         "knplabs/console-service-provider": "dev-master"
     },
+    "suggest": {
+        "dflydev/doctrine-orm-service-provider": "1.0.x-dev"
+    },
     "autoload": {
         "psr-4": {
             "Dbtlr\\MigrationProvider\\": "src/"
