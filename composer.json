@@ -13,10 +13,10 @@
     ],
     "require": {
         "php": ">=5.3.2",
-        "doctrine/dbal":  "~2.1",
-        "silex/silex": "*",
+        "doctrine/dbal":  "~2.5",
+        "silex/silex": "~1.2",
         "doctrine/migrations": "1.0.*@dev",
-        "knplabs/console-service-provider": "dev-master"
+        "knplabs/console-service-provider": "~1.0"
     },
     "suggest": {
         "dflydev/doctrine-orm-service-provider": "1.0.x-dev"
