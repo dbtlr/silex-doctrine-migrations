@@ -14,7 +14,7 @@ composer.phar require dbtlr/silex-doctrine-migrations
 ## Add service provider
 
 ```php
-$app->register(new \Dbtlr\MigrationProvider\MigrationServiceProvider(), array(
+$app->register(new \Dbtlr\MigrationProvider\Provider\MigrationServiceProvider(), array(
     'db.migrations.path' => __DIR__ . '/../app/migrations',
 ));
 ```
