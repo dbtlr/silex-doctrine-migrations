@@ -11,6 +11,7 @@ use Ivoba\Silex\Console\ConsoleEvents;
 use Ivoba\Silex\Console\ConsoleEvent;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Helper\HelperSet;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class MigrationServiceProvider implements ServiceProviderInterface
 {
@@ -24,7 +25,9 @@ class MigrationServiceProvider implements ServiceProviderInterface
         $app['db.migrations.table_name'] = null;
         $app['db.migrations.name'] = null;
 
-        $app['dispatcher']->addListener(ConsoleEvents::INIT, function (ConsoleEvent $event) use ($app) {
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = $app['dispatcher'];
+        $dispatcher->addListener(ConsoleEvents::INIT, function (ConsoleEvent $event) use ($app) {
             $application = $event->getApplication();
 
             $helpers = array('dialog' => new QuestionHelper());
