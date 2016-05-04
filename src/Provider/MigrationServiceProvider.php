@@ -41,6 +41,13 @@ class MigrationServiceProvider implements ServiceProviderInterface
             $config->setMigrationsNamespace($app['db.migrations.namespace']);
 
             if ($app['db.migrations.path']) {
+                if (!is_dir($app['db.migrations.path'])) {
+                    if (!mkdir($app['db.migrations.path'])) {
+                        throw new \InvalidArgumentException(
+                            'db.migrations.path directory does not exist, and unable to create it'
+                        );
+                    }
+                }
                 $config->setMigrationsDirectory($app['db.migrations.path']);
                 $config->registerMigrationsFromDirectory($app['db.migrations.path']);
             }
