@@ -18,6 +18,9 @@
         "doctrine/migrations": "1.0.*@dev",
         "ivoba/console-service-provider": "~2.0"
     },
+    "require-dev": {
+        "doctrine/orm": "~2.0"
+    },
     "suggest": {
         "dflydev/doctrine-orm-service-provider": "1.0.x-dev"
     },
