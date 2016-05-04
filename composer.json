@@ -16,7 +16,7 @@
         "doctrine/dbal":  "~2.5",
         "silex/silex": "~1.2",
         "doctrine/migrations": "1.0.*@dev",
-        "knplabs/console-service-provider": "~1.0"
+        "ivoba/console-service-provider": "~2.0"
     },
     "suggest": {
         "dflydev/doctrine-orm-service-provider": "1.0.x-dev"
@@ -24,6 +24,11 @@
     "autoload": {
         "psr-4": {
             "Dbtlr\\MigrationProvider\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "v1.0.x-dev"
         }
     }
 }
