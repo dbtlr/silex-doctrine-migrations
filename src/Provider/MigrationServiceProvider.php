@@ -57,13 +57,16 @@ class MigrationServiceProvider implements ServiceProviderInterface
             }
 
             $commands = array(
-                new Command\DiffCommand(),
                 new Command\ExecuteCommand(),
                 new Command\GenerateCommand(),
                 new Command\MigrateCommand(),
                 new Command\StatusCommand(),
                 new Command\VersionCommand(),
             );
+
+            if (isset($app['orm.em'])) {
+                $commands[] = new Command\DiffCommand();
+            }
 
             foreach ($commands as $command) {
                 /** @var \Doctrine\DBAL\Migrations\Tools\Console\Command\AbstractCommand $command */
