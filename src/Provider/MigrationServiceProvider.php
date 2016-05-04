@@ -7,9 +7,9 @@ use Doctrine\DBAL\Migrations\Tools\Console\Command;
 use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
 use Silex\ServiceProviderInterface;
 use Silex\Application;
-use Knp\Console\ConsoleEvents;
-use Knp\Console\ConsoleEvent;
-use Symfony\Component\Console\Helper\DialogHelper;
+use Ivoba\Silex\Console\ConsoleEvents;
+use Ivoba\Silex\Console\ConsoleEvent;
+use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Helper\HelperSet;
 
 class MigrationServiceProvider implements ServiceProviderInterface
@@ -27,7 +27,7 @@ class MigrationServiceProvider implements ServiceProviderInterface
         $app['dispatcher']->addListener(ConsoleEvents::INIT, function (ConsoleEvent $event) use ($app) {
             $application = $event->getApplication();
 
-            $helpers = array('dialog' => new DialogHelper());
+            $helpers = array('dialog' => new QuestionHelper());
 
             if (isset($app['orm.em'])) {
                 $helpers['em'] = new EntityManagerHelper($app['orm.em']);
