@@ -14,9 +14,9 @@
     "require": {
         "php": ">=5.3.2",
         "doctrine/dbal":  "~2.5",
-        "silex/silex": "~1.2",
-        "doctrine/migrations": "1.0.*@dev",
-        "knplabs/console-service-provider": "~1.0"
+        "silex/silex": "~2.0",
+        "doctrine/migrations": "^1.4",
+        "knplabs/console-service-provider": "^2.0"
     },
     "suggest": {
         "dflydev/doctrine-orm-service-provider": "1.0.x-dev"
